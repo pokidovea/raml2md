@@ -13,7 +13,8 @@
     "commander": "2.9.x",
     "nunjucks": "2.2.x",
     "raml2obj": "2.2.x",
-    "q": "1.4.x"
+    "q": "1.4.x",
+    "raml-jsonschema-expander": "^1.0.0"
   },
   "devDependencies": {
     "eslint": "1.10.x",

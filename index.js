@@ -6,6 +6,7 @@ var raml2obj = require('raml2obj');
 var pjson = require('./package.json');
 var nunjucks = require('nunjucks');
 var Q = require('q');
+var ramlJsonSchemaExpander = require('raml-jsonschema-expander');
 
 /*
  The config object can contain the following keys and values:
@@ -22,6 +23,7 @@ function render(source, config) {
   return raml2obj.parse(source).then(function (ramlObj) {
     ramlObj.config = config;
 
+    ramlObj = ramlJsonSchemaExpander.expandJsonSchemas(ramlObj);
     return Q.fcall(function () {
       var result = env.render(config.template, ramlObj);
       if (config.processOutput) {
