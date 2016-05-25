@@ -6,7 +6,16 @@ var raml2obj = require('raml2obj');
 var pjson = require('./package.json');
 var nunjucks = require('nunjucks');
 var Q = require('q');
-var deref = require('json-schema-deref-sync');
+var _deref = require('json-schema-deref-sync');
+
+function deref(schema, config) {
+  var _schema_obj = schema
+  if (typeof schema === 'string') {
+    _schema_obj = JSON.parse(schema);
+  }
+
+  return JSON.stringify(_deref(_schema_obj, config), null, '  ');
+}
 
 /*
  The config object can contain the following keys and values:
@@ -23,7 +32,6 @@ function render(source, config) {
   return raml2obj.parse(source).then(function (ramlObj) {
     ramlObj.config = config;
     ramlObj.deref = deref;
-    ramlObj.json_parse = JSON.parse;
 
     return Q.fcall(function () {
       var result = env.render(config.template, ramlObj);
