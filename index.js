@@ -23,6 +23,7 @@ function render(source, config) {
   return raml2obj.parse(source).then(function (ramlObj) {
     ramlObj.config = config;
     ramlObj.deref = deref;
+    ramlObj.json_parse = json.parse;
 
     return Q.fcall(function () {
       var result = env.render(config.template, ramlObj);
